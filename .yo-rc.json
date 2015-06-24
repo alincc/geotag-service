@@ -1,0 +1,6 @@
+{
+  "generator-spring-microservice": {
+    "packageName": "no.nb.microservices.geotag",
+    "packageFolder": "no/nb/microservices/geotag"
+  }
+}

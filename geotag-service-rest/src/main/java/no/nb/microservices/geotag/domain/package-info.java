@@ -1,0 +1,1 @@
+package no.nb.microservices.geotag.domain;

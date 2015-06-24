@@ -1,0 +1,9 @@
+spring:
+  oauth2:
+    resource:
+      userInfoUri: http://localhost:9999/uaa/user
+      jwt:
+        keyUri: http://localhost:9999/uaa/oauth/token_key
+
+server:
+  port: 0

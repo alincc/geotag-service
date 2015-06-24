@@ -1,0 +1,24 @@
+info:
+  app:
+    name: geotag-service
+    description: Manages the geolocation of items
+
+endpoints:
+  restart:
+    enabled: true
+  refresh:
+    enabled: true
+
+server:
+  port: 8119
+
+---
+spring:
+    profiles: docker
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
