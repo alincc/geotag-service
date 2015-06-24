@@ -4,6 +4,7 @@ import com.mysema.query.types.Predicate;
 import com.mysema.query.types.expr.BooleanExpression;
 import no.nb.microservices.geotag.config.ApplicationSettings;
 import no.nb.microservices.geotag.config.TestContext;
+import no.nb.microservices.geotag.model.GeoPosition;
 import no.nb.microservices.geotag.model.GeoTag;
 import no.nb.microservices.geotag.model.QGeoTag;
 import no.nb.microservices.geotag.repository.GeoTagRepository;
@@ -77,17 +78,14 @@ public class GeoTagControllerUnitTest  {
         mockMvc = MockMvcBuilders.standaloneSetup(geoTagController).build();
 
         //GeoTag(String id, String userID, String urn, String sesamid, String longitude, String latitude, Date date, String title)
-        GeoTag tag1 = new GeoTag("13aa8f23e4b0666a514604fa", "a62eb09d-dbf2-495a-8872-7d16e6911296", "URN:NBN:no-nb_foto_NF.W_50121",
-                "32e68b89a170214633119b1717b45d56",9.052734375, 66.04758417711061, new Date(),
-                "Wilse, Anders Bee");
+        GeoTag tag1 = new GeoTag("13aa8f23e4b0666a514604fa", "URN:NBN:no-nb_foto_NF.W_50121",
+                "32e68b89a170214633119b1717b45d56", "Wilse, Anders Bee", new GeoPosition("a62eb09d-dbf2-495a-8872-7d16e6911296", 9.052734375, 66.04758417711061, new Date()));
 
-        GeoTag tag2 = new GeoTag("539fedvf3786e7e7fa64f47c", "a62eb09d-dbf2-495a-8872-7d16e6911296", "URN:NBN:no-nb_digifoto_20140228_00094_NB_WF_EDK_129136",
-                "1d5712eb0cf8a6e71a928e15a6c1f9f8",12.052734375, 61.04758417711061, new Date(),
-                "Widerøe Flyveselskaps flyfoto fra Engerdal kommune : Østli, Engerdal.");
+        GeoTag tag2 = new GeoTag("539fedvf3786e7e7fa64f47c", "URN:NBN:no-nb_digifoto_20140228_00094_NB_WF_EDK_129136", "1d5712eb0cf8a6e71a928e15a6c1f9f8",
+                "Widerøe Flyveselskaps flyfoto fra Engerdal kommune : Østli, Engerdal.", new GeoPosition("a62eb09d-dbf2-495a-8872-7d16e6911296", 2.052734375, 61.04758417711061, new Date()));
 
-        GeoTag tag3 = new GeoTag("408fedvf3786e7e7fa64f47c", "a62eb09d-dbf2-495a-8872-7d16e6911296", "URN:NBN:no-nb_digifoto_20140228_00094_NB_WF_EDK_129138",
-                "1d5712eb0cf8a6e71a928e15a6c1f9f7",13.052734375, 62.04758417711061, new Date(),
-                "Widerøe Flyveselskaps flyfoto fra Engerdal kommune : Østli, Rana.");
+        GeoTag tag3 = new GeoTag("408fedvf3786e7e7fa64f47c", "URN:NBN:no-nb_digifoto_20140228_00094_NB_WF_EDK_129138", "1d5712eb0cf8a6e71a928e15a6c1f9f7",
+                "Widerøe Flyveselskaps flyfoto fra Engerdal kommune : Østli, Rana.", new GeoPosition("a62eb09d-dbf2-495a-8872-7d16e6911296", 13.052734375, 62.04758417711061, new Date()));
 
         geoTagList.addAll(Arrays.asList(tag1, tag2, tag3));
     }

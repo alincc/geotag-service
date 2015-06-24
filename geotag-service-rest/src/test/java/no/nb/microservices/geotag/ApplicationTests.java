@@ -12,6 +12,7 @@ import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
 import no.nb.microservices.geotag.config.ApplicationSettings;
+import no.nb.microservices.geotag.model.GeoPosition;
 import no.nb.microservices.geotag.model.GeoTag;
 import no.nb.microservices.geotag.repository.GeoTagRepository;
 import no.nb.microservices.geotag.rest.assembler.GeoTagResourceAssembler;
@@ -119,14 +120,8 @@ public class ApplicationTests {
         when(nbUserService.getNBUser()).thenReturn(nbUserDetails);
 
         //GeoTag(String id, String userID, String urn, String sesamid, String longitude, String latitude, Date date, String title)
-        GeoTag tag1 = new GeoTag("", "a62eb09d-dbf2-495a-8872-7d16e6911296", "URN:NBN:no-nb_foto_NF.W_50121",
-                "32e68b89a170214633119b1717b45d56",9.052734375, 66.04758417711061, new Date(),
-                "Wilse, Anders Bee");
-
-        GeoTag tag2 = new GeoTag("", "a62eb09d-dbf2-495a-8872-7d16e6911296", "URN:NBN:no-nb_digifoto_20140228_00094_NB_WF_EDK_129136",
-                "1d5712eb0cf8a6e71a928e15a6c1f9f8",12.052734375, 61.04758417711061, new Date(),
-                "Widerøe Flyveselskaps flyfoto fra Engerdal kommune : Østli, Engerdal.");
-
+        GeoTag tag1 = new GeoTag("", "URN:NBN:no-nb_foto_NF.W_50121", "32e68b89a170214633119b1717b45d56", "Wilse, Anders Bee", new GeoPosition("a62eb09d-dbf2-495a-8872-7d16e6911296", 9.052734375, 66.04758417711061, new Date()));
+        GeoTag tag2 = new GeoTag("", "URN:NBN:nb_digifoto_20140228_00094_NB_WF_EDK_129136", "1d5712eb0cf8a6e71a928e15a6c1f9f8", "Widerøe Flyveselskaps flyfoto fra Engerdal kommune : Østli, Engerdal.", new GeoPosition("a62eb09d-dbf2-495a-8872-7d16e6911296", 12.052734375, 61.04758417711061, new Date()));
 
         for (GeoTag tag : Arrays.asList(tag1, tag2)) {
             MvcResult result = mockMvc.perform(post("/geotags")
@@ -195,9 +190,7 @@ public class ApplicationTests {
                 .andExpect(jsonPath("$.content", hasSize(2)))
                 .andExpect(status().isOk());
 
-        GeoTag geotag1 = new GeoTag("", USER_ID, "URN:NBN:no-nb_digifoto_20131218_00056_NB_WF_LUR_041262",
-                "2b1fffd40bac149f7f0fa52337b9427a", 12.835818529129028, 66.40039201638066, new Date(),
-                "Widerøe Flyveselskaps flyfoto fra Lurøy kommune : Rødøy, Lurøy.");
+        GeoTag geotag1 = new GeoTag("", "URN:NBN:no-nb_digifoto_20131218_00056_NB_WF_LUR_041262", "2b1fffd40bac149f7f0fa52337b9427a", "Widerøe Flyveselskaps flyfoto fra Lurøy kommune : Rødøy, Lurøy.", new GeoPosition(USER_ID, 12.835818529129028, 66.40039201638066, new Date()));
 
         mockMvc.perform(put("/geotags/{tagid}", tag1.getGeoId())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -222,13 +215,8 @@ public class ApplicationTests {
         when(nbUserService.getNBUser()).thenReturn(nbUserDetails1);
 
         //GeoTag(String id, String userID, String urn, String sesamid, String longitude, String latitude, Date date, String title)
-        GeoTag tag1 = new GeoTag("", "a62eb09d-dbf2-495a-8872-7d16e6911296", "URN:NBN:no-nb_foto_NF.W_50121",
-                "32e68b89a170214633119b1717b45d56",9.052734375, 66.04758417711061, new Date(),
-                "Wilse, Anders Bee");
-
-        GeoTag tag2 = new GeoTag("", "a62eb09d-dbf2-495a-8872-7d16e6911296", "URN:NBN:no-nb_digifoto_20140228_00094_NB_WF_EDK_129136",
-                "1d5712eb0cf8a6e71a928e15a6c1f9f8",12.052734375, 61.04758417711061, new Date(),
-                "Widerøe Flyveselskaps flyfoto fra Engerdal kommune : Østli, Engerdal.");
+        GeoTag tag1 = new GeoTag("", "URN:NBN:no-nb_foto_NF.W_50121", "32e68b89a170214633119b1717b45d56", "Wilse, Anders Bee", new GeoPosition("a62eb09d-dbf2-495a-8872-7d16e6911296", 9.052734375, 66.04758417711061, new Date()));
+        GeoTag tag2 = new GeoTag("", "URN:NBN:nb_digifoto_20140228_00094_NB_WF_EDK_129136", "1d5712eb0cf8a6e71a928e15a6c1f9f8", "Widerøe Flyveselskaps flyfoto fra Engerdal kommune : Østli, Engerdal.", new GeoPosition("a62eb09d-dbf2-495a-8872-7d16e6911296", 12.052734375, 61.04758417711061, new Date()));
 
         for (GeoTag tag : Arrays.asList(tag1, tag2)) {
             MvcResult result = mockMvc.perform(post("/geotags")
@@ -265,9 +253,8 @@ public class ApplicationTests {
                 .andExpect(jsonPath("$.content[0].currentPosition.userId", is(nbUserDetails1.getUserId().toString())))
                 .andExpect(jsonPath("$.content[0].currentPosition.date").exists());
 
-        GeoTag tag3 = new GeoTag("", "", "URN:NBN:no-nb_digifoto_20131218_00056_NB_WF_LUR_041262",
-                "2b1fffd40bac149f7f0fa52337b9427a", 12.835818529129028, 66.40039201638066, new Date(),
-                "Widerøe Flyveselskaps flyfoto fra Lurøy kommune : Rødøy, Lurøy.");
+        GeoTag tag3 = new GeoTag("", "URN:NBN:no-nb_digifoto_20131218_00056_NB_WF_LUR_041262", "2b1fffd40bac149f7f0fa52337b9427a", "Widerøe Flyveselskaps flyfoto fra Lurøy kommune : Rødøy, Lurøy.", new GeoPosition(USER_ID, 12.835818529129028, 66.40039201638066, new Date()));
+
         mockMvc.perform(put("/geotags/{tagid}", tag1.getGeoId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.convertValue(tag3, JsonNode.class).toString()))

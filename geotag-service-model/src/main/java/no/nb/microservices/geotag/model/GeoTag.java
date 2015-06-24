@@ -36,7 +36,7 @@ public class GeoTag extends ResourceSupport {
     @Indexed
     @NotEmpty
     @Length(max = 100)
-    @Pattern(regexp = "URN:NBN:no-nb_.*")
+    @Pattern(regexp = "URN:NBN:.*")
     private String urn;
 
     @NotEmpty
@@ -59,7 +59,7 @@ public class GeoTag extends ResourceSupport {
 
     }
 
-    public GeoTag(String id, String urn, String sesamId, GeoPosition geoPosition) {
+    public GeoTag(String id, String urn, String sesamId, String title, GeoPosition geoPosition) {
         this.id = id;
         this.urn = urn;
         this.title = title;
