@@ -1,11 +1,10 @@
 package no.nb.microservices.geotag.model;
 
-import java.lang.String;import java.util.Date;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.mysema.query.annotations.QueryEntity;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
@@ -13,10 +12,9 @@ import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.mysema.query.annotations.QueryEntity;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * Created by Andreas Bjørnådal (andreasb) on 14.10.14.

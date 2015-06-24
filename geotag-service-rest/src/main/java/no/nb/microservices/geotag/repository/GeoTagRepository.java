@@ -1,9 +1,5 @@
 package no.nb.microservices.geotag.repository;
 
-import java.lang.String;import java.util.Date;
-
-import com.mysema.query.types.Predicate;
-
 import no.nb.microservices.geotag.model.GeoTag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +9,8 @@ import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+
+import java.util.Date;
 
 /**
  * Created by Andreas Bjørnådal (andreasb) on 26.08.14.

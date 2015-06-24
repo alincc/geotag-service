@@ -1,12 +1,5 @@
 package no.nb.microservices.geotag.rest.assembler;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import no.nb.microservices.geotag.config.ApplicationSettings;
 import no.nb.microservices.geotag.model.GeoTag;
 import no.nb.microservices.geotag.rest.controller.GeoTagController;
@@ -16,6 +9,13 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * Created by Andreas Bjørnådal (andreasb) on 26.08.14.

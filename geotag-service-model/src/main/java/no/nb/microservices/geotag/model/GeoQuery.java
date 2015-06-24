@@ -1,8 +1,8 @@
 package no.nb.microservices.geotag.model;
 
-import java.lang.Boolean;import java.lang.Double;import java.lang.String;import java.util.Date;
-
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  * Created by Andreas Bjørnådal (andreasb) on 28.10.14.

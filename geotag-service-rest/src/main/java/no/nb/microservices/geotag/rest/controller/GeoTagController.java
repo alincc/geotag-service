@@ -29,13 +29,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.lang.Exception;import java.lang.String;import java.lang.Void;import java.util.Calendar;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.UUID;
@@ -98,7 +97,7 @@ public class GeoTagController {
         Page<GeoTag> pages = geoTagRepository.findAll(expression, pageRequest);
 
         // If not admin then remove some fields.
-        if (pages != null && !nbUserService.getNBUser().getAuthorities().contains(new SimpleGrantedAuthority(ADMIN_ROLE))) {
+        if (nbUserService.getNBUser() == null || (pages != null && !nbUserService.getNBUser().getAuthorities().contains(new SimpleGrantedAuthority(ADMIN_ROLE)))) {
             for (GeoTag geoTag : pages.getContent()) {
                 geoTag.mask();
             }
@@ -117,7 +116,7 @@ public class GeoTagController {
         }
 
         // If not admin then remove some fields
-        if (!nbUserService.getNBUser().getAuthorities().contains(new SimpleGrantedAuthority(ADMIN_ROLE))) {
+        if (nbUserService.getNBUser() == null || !nbUserService.getNBUser().getAuthorities().contains(new SimpleGrantedAuthority(ADMIN_ROLE))) {
             geoTag.mask();
         }
 
@@ -209,7 +208,7 @@ public class GeoTagController {
         geoTag.getLinks().clear();
 
         // This checks that only admin can change isSticky
-        if (nbUserService.getNBUser().getAuthorities().contains(new SimpleGrantedAuthority(ADMIN_ROLE))) {
+        if (nbUserService.getNBUser() != null && nbUserService.getNBUser().getAuthorities().contains(new SimpleGrantedAuthority(ADMIN_ROLE))) {
             oldGeoTag.setSticky((geoTag.isSticky() != null) ? geoTag.isSticky() : null);
             oldGeoTag.setDirty((geoTag.isDirty() != null) ? geoTag.isDirty() : true);
         }
@@ -261,7 +260,7 @@ public class GeoTagController {
         Page<GeoTag> pages = geoTagRepository.findByCurrentPositionPositionNear(position, distance, new PageRequest(page, size));
 
         // If not admin then remove some fields
-        if (!nbUserService.getNBUser().getAuthorities().contains(new SimpleGrantedAuthority(ADMIN_ROLE))) {
+        if (nbUserService.getNBUser() == null || !nbUserService.getNBUser().getAuthorities().contains(new SimpleGrantedAuthority(ADMIN_ROLE))) {
             for (GeoTag geoTag : pages.getContent()) {
                 geoTag.mask();
             }
@@ -281,7 +280,7 @@ public class GeoTagController {
         Page<GeoTag> pages = geoTagRepository.findByCurrentPositionPositionWithin(box, new PageRequest(page, size));
 
         // If not admin then remove some fields
-        if (!nbUserService.getNBUser().getAuthorities().contains(new SimpleGrantedAuthority(ADMIN_ROLE))) {
+        if (nbUserService.getNBUser() == null || !nbUserService.getNBUser().getAuthorities().contains(new SimpleGrantedAuthority(ADMIN_ROLE))) {
             for (GeoTag geoTag : pages.getContent()) {
                 geoTag.mask();
             }
