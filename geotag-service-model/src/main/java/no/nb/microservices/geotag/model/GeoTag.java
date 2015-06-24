@@ -17,7 +17,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,16 +55,18 @@ public class GeoTag extends ResourceSupport {
 
     private List<GeoPosition> positionHistory;
 
-    public GeoTag() {}
+    public GeoTag() {
 
-    public GeoTag(String id, String userID, String urn, String sesamId, double longitude, double latitude, Date date, String title) {
+    }
+
+    public GeoTag(String id, String urn, String sesamId, GeoPosition geoPosition) {
         this.id = id;
         this.urn = urn;
         this.title = title;
         this.sesamId = sesamId;
 
         if (currentPosition == null) {
-            currentPosition = new GeoPosition(userID, longitude, latitude, date);
+            currentPosition = geoPosition;
         }
     }
 
@@ -136,13 +137,13 @@ public class GeoTag extends ResourceSupport {
         }
     }
 
-	public Boolean isDirty() {
-		return dirty;
-	}
+    public Boolean isDirty() {
+        return dirty;
+    }
 
-	public void setDirty(Boolean dirty) {
-		this.dirty = dirty;
-	}
+    public void setDirty(Boolean dirty) {
+        this.dirty = dirty;
+    }
 
     public void mask() {
         this.currentPosition.setUserEmail(null);

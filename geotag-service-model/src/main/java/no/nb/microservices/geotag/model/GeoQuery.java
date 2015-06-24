@@ -8,9 +8,9 @@ import java.util.Date;
  * Created by Andreas Bjørnådal (andreasb) on 28.10.14.
  */
 public class GeoQuery {
-	private boolean minify;
-	private Boolean dirty;
-	private Boolean sticky; 
+    private boolean minify;
+    private Boolean dirty;
+    private Boolean sticky;
     private String urn;
     private String user;
     private String email;
@@ -95,31 +95,31 @@ public class GeoQuery {
         this.updatedSince = updatedSince;
     }
 
-	public boolean isMinify() {
-		return minify;
-	}
+    public boolean isMinify() {
+        return minify;
+    }
 
-	public void setMinify(boolean minify) {
-		this.minify = minify;
-	}
+    public void setMinify(boolean minify) {
+        this.minify = minify;
+    }
 
-	public Boolean getDirty() {
-		return dirty;
-	}
+    public Boolean getDirty() {
+        return dirty;
+    }
 
-	public void setDirty(Boolean dirty) {
-		this.dirty = dirty;
-	}
+    public void setDirty(Boolean dirty) {
+        this.dirty = dirty;
+    }
 
-	public Boolean getSticky() {
-		return sticky;
-	}
+    public Boolean getSticky() {
+        return sticky;
+    }
 
-	public void setSticky(Boolean sticky) {
-		this.sticky = sticky;
-	}
-	
-	
+    public void setSticky(Boolean sticky) {
+        this.sticky = sticky;
+    }
+
+
     
     
 }

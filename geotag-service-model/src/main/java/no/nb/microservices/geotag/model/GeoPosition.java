@@ -46,7 +46,9 @@ public class GeoPosition {
     @Length(max = 1000)
     private String userComment;
     
-    public GeoPosition() { }
+    public GeoPosition() {
+
+    }
 
     public GeoPosition(String userId, double longitude, double latitude, Date date) {
         this.userId = userId;
@@ -116,27 +118,27 @@ public class GeoPosition {
         this.userId = userId;
     }
 
-	public String getUserDisplayName() {
-		return userDisplayName;
-	}
+    public String getUserDisplayName() {
+        return userDisplayName;
+    }
 
-	public void setUserDisplayName(String userDisplayName) {
-		this.userDisplayName = userDisplayName;
-	}
+    public void setUserDisplayName(String userDisplayName) {
+        this.userDisplayName = userDisplayName;
+    }
 
-	public String getUserEmail() {
-		return userEmail;
-	}
+    public String getUserEmail() {
+        return userEmail;
+    }
 
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
 
-	public String getUserComment() {
-		return userComment;
-	}
+    public String getUserComment() {
+        return userComment;
+    }
 
-	public void setUserComment(String userComment) {
-		this.userComment = userComment;
-	} 
+    public void setUserComment(String userComment) {
+        this.userComment = userComment;
+    }
 }

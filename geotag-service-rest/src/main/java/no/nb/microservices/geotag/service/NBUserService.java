@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class NBUserService {
 
-    private final Logger log = LoggerFactory.getLogger(NBUserService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(NBUserService.class);
 
     public NBUserDetails getNBUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -25,7 +25,7 @@ public class NBUserService {
                 return (NBUserDetails)principal;
             }
             else {
-                log.error("Principal is not instance of " + NBUserDetails.class.getName() + " was - " + principal.getClass() + "( " + principal + " )");
+                LOG.error("Principal is not instance of " + NBUserDetails.class.getName() + " was - " + principal.getClass() + "( " + principal + " )");
             }
         }
         return null;

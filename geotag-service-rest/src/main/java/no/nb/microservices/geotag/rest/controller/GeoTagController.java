@@ -51,7 +51,7 @@ public class GeoTagController {
 
     private final static String ADMIN_ROLE = "ROLE_TagsAdmin";
 
-    private final Logger LOGGER = LoggerFactory.getLogger(GeoTagController.class);
+    private final Logger LOG = LoggerFactory.getLogger(GeoTagController.class);
 
     private final NBUserService nbUserService;
     private final GeoTagRepository geoTagRepository;
@@ -97,7 +97,7 @@ public class GeoTagController {
         Page<GeoTag> pages = geoTagRepository.findAll(expression, pageRequest);
 
         // If not admin then remove some fields.
-        if (nbUserService.getNBUser() == null || (pages != null && !nbUserService.getNBUser().getAuthorities().contains(new SimpleGrantedAuthority(ADMIN_ROLE)))) {
+        if (pages != null && (nbUserService.getNBUser() == null || !nbUserService.getNBUser().getAuthorities().contains(new SimpleGrantedAuthority(ADMIN_ROLE)))) {
             for (GeoTag geoTag : pages.getContent()) {
                 geoTag.mask();
             }
@@ -302,7 +302,7 @@ public class GeoTagController {
             headers.append(headerKey + ": " + headerValue + ", ");
         }
 
-        LOGGER.error("" +
+        LOG.error("" +
                 "Got an unexcepted exception.\n" +
                 "Context Path: " + req.getContextPath() + "\n" +
                 "Request URI: " + req.getRequestURI() + "\n" +
@@ -311,7 +311,7 @@ public class GeoTagController {
                 "Headers: " + headers + "\n" +
                 "Auth Type: " + req.getAuthType() + "\n" +
                 "Remote User: " + req.getRemoteUser() + "\n" +
-                "Username: " + ((req.getUserPrincipal()  != null) ? req.getUserPrincipal().getName() : "Anonymous") + "\n"
+                "Username: " + ((req.getUserPrincipal() != null) ? req.getUserPrincipal().getName() : "Anonymous") + "\n"
                 , e);
     }
 }
