@@ -14,7 +14,7 @@ public interface IGeotagService {
 
     void delete(String id, String positionId);
 
-    GeoTag save(GeoTag geoTag);;
+    GeoTag save(GeoTag geoTag);
 
     GeoTag update(String id, GeoTag geoTag);
 

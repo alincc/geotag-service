@@ -9,8 +9,6 @@ import no.nb.microservices.geotag.model.QGeoTag;
 import no.nb.microservices.geotag.repository.GeoTagRepository;
 import no.nb.nbsecurity.NBUserDetails;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,8 +32,6 @@ import java.util.UUID;
 @Service
 public class GeotagService implements IGeotagService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GeotagService.class);
-
     private final GeoTagRepository geoTagRepository;
     private final NBUserService nbUserService;
 
@@ -52,7 +48,7 @@ public class GeotagService implements IGeotagService {
         if (expand != null) {
             for (String item : expand) {
                 //Expand games
-                if (item.equals("positionHistory")) {
+                if ("positionHistory".equals(item)) {
                     removeHistory = false;
                 }
             }
@@ -84,7 +80,7 @@ public class GeotagService implements IGeotagService {
         Page<GeoTag> pages = geoTagRepository.findAll(expression, pageRequest);
 
         // If not admin then remove some fields.
-        boolean maskGeotag = (pages != null && (nbUserService.getNBUser() == null || !nbUserService.getNBUser().getAuthorities().contains(new SimpleGrantedAuthority(Constants.ADMIN_ROLE))));
+        boolean maskGeotag = pages != null && (nbUserService.getNBUser() == null || !nbUserService.getNBUser().getAuthorities().contains(new SimpleGrantedAuthority(Constants.ADMIN_ROLE)));
         for (GeoTag geoTag : pages.getContent()) {
             if (removeHistory) {
                 geoTag.setPositionHistory(null);
