@@ -79,6 +79,10 @@ public class GeoTag extends ResourceSupport {
         this.id = id;
     }
 
+    public String getExpand() {
+        return "positionHistory";
+    }
+
     public String getUrn() {
         return urn;
     }

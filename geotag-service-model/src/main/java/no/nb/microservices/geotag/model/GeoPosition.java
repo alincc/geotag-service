@@ -56,6 +56,21 @@ public class GeoPosition {
         this.position = new double[] {longitude, latitude};
     }
 
+    public GeoPosition(String userId, String userEmail, double longitude, double latitude, Date date) {
+        this.userId = userId;
+        this.userEmail = userEmail;
+        this.date = date;
+        this.position = new double[] {longitude, latitude};
+    }
+
+    public GeoPosition(String posId, String userId, String userEmail, double longitude, double latitude, Date date) {
+        this.posId = posId;
+        this.userId = userId;
+        this.userEmail = userEmail;
+        this.date = date;
+        this.position = new double[] {longitude, latitude};
+    }
+
     public String getPosId() {
         return posId;
     }

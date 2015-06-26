@@ -10,7 +10,7 @@ endpoints:
     enabled: true
 
 server:
-  port: 0
+  port: 8082
 
 spring:
   data:

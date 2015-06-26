@@ -17,6 +17,7 @@ import no.nb.microservices.geotag.model.GeoTag;
 import no.nb.microservices.geotag.repository.GeoTagRepository;
 import no.nb.microservices.geotag.rest.assembler.GeoTagResourceAssembler;
 import no.nb.microservices.geotag.rest.controller.GeoTagController;
+import no.nb.microservices.geotag.service.GeotagService;
 import no.nb.microservices.geotag.service.NBUserService;
 import no.nb.nbsecurity.NBUserDetails;
 import org.junit.After;
@@ -27,7 +28,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +36,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.http.MediaType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -54,7 +55,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
+@ContextConfiguration
 @WebAppConfiguration
 public class ApplicationTests {
 
@@ -66,6 +67,8 @@ public class ApplicationTests {
 
     @Autowired
     private ApplicationSettings applicationSettings;
+
+    private GeotagService geotagService;
 
     @Mock
     private NBUserService nbUserService;
@@ -103,7 +106,8 @@ public class ApplicationTests {
     public void setupTest() throws Exception {
         MockitoAnnotations.initMocks(this);
         mapper = new ObjectMapper();
-        geoTagController = new GeoTagController(nbUserService, geoTagRepository, new GeoTagResourceAssembler(applicationSettings), applicationSettings);
+        geotagService = new GeotagService(geoTagRepository, nbUserService);
+        geoTagController = new GeoTagController(nbUserService, new GeoTagResourceAssembler(applicationSettings), applicationSettings, geotagService);
         mockMvc = MockMvcBuilders.standaloneSetup(geoTagController).build();
     }
 
@@ -269,7 +273,7 @@ public class ApplicationTests {
 
     @Configuration
     @EnableMongoRepositories
-    @ComponentScan(basePackageClasses = { GeoTagRepository.class })
+    @ComponentScan(basePackageClasses = { GeoTagRepository.class, GeotagService.class })
     static class MongoConfiguration extends AbstractMongoConfiguration {
 
         @Override

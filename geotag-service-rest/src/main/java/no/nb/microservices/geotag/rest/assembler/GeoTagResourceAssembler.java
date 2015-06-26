@@ -81,19 +81,19 @@ public class GeoTagResourceAssembler implements ResourceAssembler<GeoTagPage, Pa
             }
         }
         else {
-            links.add(linkTo(methodOn(GeoTagController.class).getTags(geoTagPage.getGeoQuery(), page.getNumber(), page.getSize())).withSelfRel());
+            links.add(linkTo(methodOn(GeoTagController.class).getTags(geoTagPage.getGeoQuery(), page.getNumber(), page.getSize(), geoTagPage.getExpand())).withSelfRel());
 
             if (page.hasPrevious()) {
-                links.add(linkTo(methodOn(GeoTagController.class).getTags(geoTagPage.getGeoQuery(), page.previousPageable().getPageNumber(), page.getSize())).withRel("prev"));
+                links.add(linkTo(methodOn(GeoTagController.class).getTags(geoTagPage.getGeoQuery(), page.previousPageable().getPageNumber(), page.getSize(), geoTagPage.getExpand())).withRel("prev"));
             }
             if (page.hasNext()) {
-                links.add(linkTo(methodOn(GeoTagController.class).getTags(geoTagPage.getGeoQuery(), page.nextPageable().getPageNumber(), page.getSize())).withRel("next"));
+                links.add(linkTo(methodOn(GeoTagController.class).getTags(geoTagPage.getGeoQuery(), page.nextPageable().getPageNumber(), page.getSize(), geoTagPage.getExpand())).withRel("next"));
             }
             if (!page.isFirst()) {
-                links.add(linkTo(methodOn(GeoTagController.class).getTags(geoTagPage.getGeoQuery(), 0, page.getSize())).withRel("first"));
+                links.add(linkTo(methodOn(GeoTagController.class).getTags(geoTagPage.getGeoQuery(), 0, page.getSize(), geoTagPage.getExpand())).withRel("first"));
             }
             if (!page.isLast()) {
-                links.add(linkTo(methodOn(GeoTagController.class).getTags(geoTagPage.getGeoQuery(), page.getTotalPages()-1, page.getNumberOfElements())).withRel("last"));
+                links.add(linkTo(methodOn(GeoTagController.class).getTags(geoTagPage.getGeoQuery(), page.getTotalPages()-1, page.getNumberOfElements(), geoTagPage.getExpand())).withRel("last"));
             }
         }
 
