@@ -39,13 +39,6 @@ public class GeoTag extends ResourceSupport {
     @Pattern(regexp = "URN:NBN:.*")
     private String urn;
 
-    @NotEmpty
-    @Length(min = 32, max = 32)
-    private String sesamId;
-
-    @Length(max = 160)
-    private String title;
-
     private Boolean sticky;
     
     private Boolean dirty;
@@ -53,20 +46,19 @@ public class GeoTag extends ResourceSupport {
     @NotNull
     private GeoPosition currentPosition;
 
-    private List<GeoPosition> positionHistory;
+    private List<GeoPosition> userPositions;
 
     public GeoTag() {
 
     }
 
-    public GeoTag(String id, String urn, String sesamId, String title, GeoPosition geoPosition) {
+    public GeoTag(String id, String urn, GeoPosition geoPosition) {
         this.id = id;
         this.urn = urn;
-        this.title = title;
-        this.sesamId = sesamId;
 
         if (currentPosition == null) {
             currentPosition = geoPosition;
+            this.addUserPosition(geoPosition);
         }
     }
 
@@ -80,7 +72,7 @@ public class GeoTag extends ResourceSupport {
     }
 
     public String getExpand() {
-        return "positionHistory";
+        return "userPositions";
     }
 
     public String getUrn() {
@@ -89,22 +81,6 @@ public class GeoTag extends ResourceSupport {
 
     public void setUrn(String urn) {
         this.urn = urn;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getSesamId() {
-        return sesamId;
-    }
-
-    public void setSesamId(String sesamID) {
-        this.sesamId = sesamID;
     }
 
     public Boolean isSticky() {
@@ -123,21 +99,24 @@ public class GeoTag extends ResourceSupport {
         this.currentPosition = currentPosition;
     }
 
-    public List<GeoPosition> getPositionHistory() {
-        return positionHistory;
+    public List<GeoPosition> getUserPositions() {
+        if (this.userPositions == null) {
+            this.userPositions = new ArrayList<>();
+        }
+        return userPositions;
     }
 
-    public void setPositionHistory(List<GeoPosition> positionHistory) {
-        this.positionHistory = positionHistory;
+    public void setUserPositions(List<GeoPosition> userPositions) {
+        this.userPositions = userPositions;
     }
 
-    public void addPositionHistory(GeoPosition geoPosition) {
-        if (this.getPositionHistory() == null) {
-            this.setPositionHistory(new ArrayList<GeoPosition>());
+    public void addUserPosition(GeoPosition geoPosition) {
+        if (this.getUserPositions() == null) {
+            this.setUserPositions(new ArrayList<GeoPosition>());
         }
 
         if (geoPosition != null) {
-            this.positionHistory.add(geoPosition);
+            this.userPositions.add(geoPosition);
         }
     }
 
@@ -151,7 +130,7 @@ public class GeoTag extends ResourceSupport {
 
     public void mask() {
         this.currentPosition.setUserEmail(null);
-        this.positionHistory = null;
+        this.userPositions = null;
         this.dirty = null;
     }
 }
