@@ -4,7 +4,6 @@ import no.nb.microservices.geotag.config.ApplicationSettings;
 import no.nb.microservices.geotag.model.GeoPosition;
 import no.nb.microservices.geotag.model.GeoTag;
 import no.nb.microservices.geotag.repository.GeoTagRepository;
-import no.nb.microservices.geotag.rest.assembler.GeoTagResourceAssembler;
 import no.nb.microservices.geotag.service.GeoTagService;
 import no.nb.microservices.geotag.service.NBUserService;
 import no.nb.nbsecurity.NBUserDetails;
@@ -64,7 +63,7 @@ public class PositionControllerTest {
         NBUserDetails nbUserDetails = new NBUserDetails("sessionID1234", UUID.fromString(USER_ID), "myusername", "mypassword", true, true, true, true, true, permissions);
         when(nbUserService.getNBUser()).thenReturn(nbUserDetails);
 
-        positionController = new PositionController(new GeoTagResourceAssembler(applicationSettings), geoTagService);
+        positionController = new PositionController(geoTagService);
 
         mockMvc = MockMvcBuilders.standaloneSetup(positionController).build();
 

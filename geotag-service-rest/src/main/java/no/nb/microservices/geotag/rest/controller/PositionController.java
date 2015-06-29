@@ -2,7 +2,6 @@ package no.nb.microservices.geotag.rest.controller;
 
 import no.nb.microservices.geotag.model.GeoPosition;
 import no.nb.microservices.geotag.model.GeoTag;
-import no.nb.microservices.geotag.rest.assembler.GeoTagResourceAssembler;
 import no.nb.microservices.geotag.service.IGeoTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -24,12 +23,10 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 public class PositionController {
 
-    private final GeoTagResourceAssembler assembler;
     private final IGeoTagService geotagService;
 
     @Autowired
-    public PositionController(GeoTagResourceAssembler assembler, IGeoTagService geotagService) {
-        this.assembler = assembler;
+    public PositionController(IGeoTagService geotagService) {
         this.geotagService = geotagService;
     }
 

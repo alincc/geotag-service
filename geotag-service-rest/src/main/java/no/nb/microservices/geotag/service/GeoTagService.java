@@ -106,7 +106,7 @@ public class GeoTagService implements IGeoTagService {
         GeoTag geoTag = geoTagRepository.findOne(id);
 
         if (geoTag == null) {
-            throw new NoSuchElementException("Geotag not found");
+            throw new NoSuchElementException(Constants.GEOTAG_NOT_FOUND);
         }
 
         // If not admin then remove some fields
@@ -148,7 +148,7 @@ public class GeoTagService implements IGeoTagService {
         GeoTag geoTag = geoTagRepository.findOne(id);
 
         if (geoTag == null) {
-            throw new NoSuchElementException("Geotag not found");
+            throw new NoSuchElementException(Constants.GEOTAG_NOT_FOUND);
         }
 
         for (Iterator<GeoPosition> iterator = geoTag.getUserPositions().iterator(); iterator.hasNext(); ) {
@@ -217,14 +217,13 @@ public class GeoTagService implements IGeoTagService {
         GeoTag geoTag = geoTagRepository.findOne(id);
 
         if (geoTag == null) {
-            throw new NoSuchElementException("Geotag not found");
+            throw new NoSuchElementException(Constants.GEOTAG_NOT_FOUND);
         }
 
         geoTag.addUserPosition(geoPosition);
         GeoTag savedGeoTag = geoTagRepository.save(geoTag);
-        GeoPosition position = savedGeoTag.getUserPositions().get(savedGeoTag.getUserPositions().size() -1);
 
-        return position;
+        return savedGeoTag.getUserPositions().get(savedGeoTag.getUserPositions().size() -1);
     }
 
     @Override

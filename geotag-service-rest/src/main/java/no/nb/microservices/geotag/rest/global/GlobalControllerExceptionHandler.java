@@ -1,4 +1,4 @@
-package no.nb.microservices.geotag.rest.controller;
+package no.nb.microservices.geotag.rest.global;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ import java.util.NoSuchElementException;
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {
 
-    private final Logger LOG = LoggerFactory.getLogger(GlobalControllerExceptionHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GlobalControllerExceptionHandler.class);
 
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "No access")

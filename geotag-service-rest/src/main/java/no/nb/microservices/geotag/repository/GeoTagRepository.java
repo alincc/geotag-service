@@ -24,6 +24,6 @@ public interface GeoTagRepository extends MongoRepository<GeoTag, String>, Query
     
     Page<GeoTag> findByCurrentPositionDateGreaterThan(Date date, Pageable pageable);
     
-    @Query(value = "{'currentPosition.date': {'$gt': ?0}}", fields = "{'sesamId' : 1, 'urn' : 1, 'title' : 1, 'currentPosition.position' : 1}")
+    @Query(value = "{'currentPosition.date': {'$gt': ?0}}", fields = "{'urn' : 1, 'currentPosition.position' : 1}")
     Page<GeoTag> findByCurrentPositionDateGreaterThanMinified(Date date, Pageable pageable);
 }

@@ -1,7 +1,7 @@
 package no.nb.microservices.geotag.config;
 
 import no.nb.microservices.geotag.repository.GeoTagRepository;
-import no.nb.microservices.geotag.rest.controller.GlobalControllerExceptionHandler;
+import no.nb.microservices.geotag.rest.global.GlobalControllerExceptionHandler;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
