@@ -21,6 +21,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * Created by andreasb on 29.06.15.
  */
 @RestController
+@RequestMapping("/v1")
 public class PositionController {
 
     private final IGeoTagService geotagService;

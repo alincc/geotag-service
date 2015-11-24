@@ -29,6 +29,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * Created by Andreas Bjørnådal (andreasb) on 19.08.14.
  */
 @RestController
+@RequestMapping("/v1")
 public class GeoTagController {
 
     private final Logger LOG = LoggerFactory.getLogger(GeoTagController.class);

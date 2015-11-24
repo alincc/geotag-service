@@ -85,7 +85,7 @@ public class GeoTagControllerTest {
     public void getAllTags() throws Exception {
         when(geoTagService.query(any(GeoQuery.class), anyInt(), anyInt(), any(String[].class))).thenReturn(new PageImpl<GeoTag>(geoTagList));
 
-        mockMvc.perform(get("/geotags"))
+        mockMvc.perform(get("/v1/geotags"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(3)))
                 .andExpect(jsonPath("$.content[1].id").value(geoTagList.get(1).getGeoId()));
@@ -100,7 +100,7 @@ public class GeoTagControllerTest {
 
         when(geoTagService.query(any(GeoQuery.class), anyInt(), anyInt(), any(String[].class))).thenReturn(new PageImpl<GeoTag>(Arrays.asList(tag1)));
 
-        mockMvc.perform(get("/geotags")
+        mockMvc.perform(get("/v1/geotags")
                 .param("urn", tag1.getUrn()))
                 .andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(status().isOk());
@@ -115,7 +115,7 @@ public class GeoTagControllerTest {
 
         when(geoTagService.query(eq(query), anyInt(), anyInt(), any(String[].class))).thenReturn(new PageImpl<GeoTag>(Arrays.asList(tag1)));
 
-        mockMvc.perform(get("/geotags")
+        mockMvc.perform(get("/v1/geotags")
                 .param("urn", "URN:NBN:no-nb_film123tull"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(0)));
@@ -127,7 +127,7 @@ public class GeoTagControllerTest {
 
         when(geoTagService.findOne(eq(tag1.getGeoId()), any(String[].class))).thenReturn(tag1);
 
-        mockMvc.perform(get("/geotags/{id}", tag1.getGeoId()))
+        mockMvc.perform(get("/v1/geotags/{id}", tag1.getGeoId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(tag1.getGeoId()));
     }
@@ -138,7 +138,7 @@ public class GeoTagControllerTest {
 
         when(geoTagService.findOne(anyString(), any(String[].class))).thenThrow(new NoSuchElementException("Geotag not found"));
 
-        mockMvc.perform(get("/geotags/{id}", "dummyID"))
+        mockMvc.perform(get("/v1/geotags/{id}", "dummyID"))
                 .andExpect(status().isNotFound());
     }
 }

@@ -79,7 +79,7 @@ public class PositionControllerTest {
         GeoTag tag1 = geoTagList.get(0);
         when(geoTagService.findOne(tag1.getGeoId(), new String[] {"positions"})).thenReturn(tag1);
 
-        mockMvc.perform(get("/geotags/{id}/positions", tag1.getGeoId()))
+        mockMvc.perform(get("/v1/geotags/{id}/positions", tag1.getGeoId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)));
     }

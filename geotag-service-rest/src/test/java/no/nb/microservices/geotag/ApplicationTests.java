@@ -128,7 +128,7 @@ public class ApplicationTests {
         GeoTag tag2 = new GeoTag("", "URN:NBN:nb_digifoto_20140228_00094_NB_WF_EDK_129136", new GeoPosition("a62eb09d-dbf2-495a-8872-7d16e6911296", 12.052734375, 61.04758417711061, new Date()));
 
         for (GeoTag tag : Arrays.asList(tag1, tag2)) {
-            MvcResult result = mockMvc.perform(post("/geotags")
+            MvcResult result = mockMvc.perform(post("/v1/geotags")
                     .content(mapper.convertValue(tag, JsonNode.class).toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isCreated())
@@ -139,11 +139,11 @@ public class ApplicationTests {
             tag.setGeoId(id);
         }
 
-        mockMvc.perform(get("/geotags"))
+        mockMvc.perform(get("/v1/geotags"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(2)));
 
-        mockMvc.perform(get("/geotags")
+        mockMvc.perform(get("/v1/geotags")
                 .param("urn", tag1.getUrn()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(1)))
@@ -152,25 +152,25 @@ public class ApplicationTests {
                 .andExpect(jsonPath("$.content[0].currentPosition.userId", is(USER_ID)))
                 .andExpect(jsonPath("$.content[0].currentPosition.date", notNullValue()));
 
-        mockMvc.perform(get("/geotags")
+        mockMvc.perform(get("/v1/geotags")
                 .param("user", USER_ID))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(get("/nearby")
+        mockMvc.perform(get("/v1/nearby")
                 .param("lon", "9.1487565")
                 .param("lat", "65.9954774")
                 .param("maxDistance", "10"))
                 .andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(get("/nearby")
+        mockMvc.perform(get("/v1/nearby")
                 .param("lon", "9.1487565")
                 .param("lat", "68.9954774")
                 .param("maxDistance", "1"))
                 .andExpect(jsonPath("$.content", hasSize(0)))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(get("/within")
+        mockMvc.perform(get("/v1/within")
                 .param("lon", "12.000")
                 .param("lat", "61.000")
                 .param("secondLon", "16.000")
@@ -178,7 +178,7 @@ public class ApplicationTests {
                 .andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(get("/within")
+        mockMvc.perform(get("/v1/within")
                 .param("lon", "9.000")
                 .param("lat", "61.500")
                 .param("secondLon", "16.000")
@@ -186,7 +186,7 @@ public class ApplicationTests {
                 .andExpect(jsonPath("$.content", hasSize(0)))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(get("/within")
+        mockMvc.perform(get("/v1/within")
                 .param("lon", "9.000")
                 .param("lat", "61.000")
                 .param("secondLon", "13.000")
@@ -196,12 +196,12 @@ public class ApplicationTests {
 
         GeoTag geotag1 = new GeoTag("", "URN:NBN:no-nb_digifoto_20131218_00056_NB_WF_LUR_041262", new GeoPosition(USER_ID, 12.835818529129028, 66.40039201638066, new Date()));
 
-        mockMvc.perform(put("/geotags/{tagid}", tag1.getGeoId())
+        mockMvc.perform(put("/v1/geotags/{tagid}", tag1.getGeoId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.convertValue(geotag1, JsonNode.class).toString()))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(get("/geotags/{tagid}", tag1.getGeoId()))
+        mockMvc.perform(get("/v1/geotags/{tagid}", tag1.getGeoId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.urn", is(geotag1.getUrn())))
                 .andExpect(jsonPath("$.id", is(tag1.getGeoId())))
@@ -223,7 +223,7 @@ public class ApplicationTests {
         GeoTag tag2 = new GeoTag("", "URN:NBN:nb_digifoto_20140228_00094_NB_WF_EDK_129136", new GeoPosition("a62eb09d-dbf2-495a-8872-7d16e6911296", 12.052734375, 61.04758417711061, new Date()));
 
         for (GeoTag tag : Arrays.asList(tag1, tag2)) {
-            MvcResult result = mockMvc.perform(post("/geotags")
+            MvcResult result = mockMvc.perform(post("/v1/geotags")
                     .content(mapper.convertValue(tag, JsonNode.class).toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isCreated())
@@ -234,12 +234,12 @@ public class ApplicationTests {
             tag.setGeoId(id);
         }
 
-        mockMvc.perform(get("/geotags")
+        mockMvc.perform(get("/v1/geotags")
                 .param("urn", "dummyurn"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(0)));
 
-        mockMvc.perform(get("/geotags")
+        mockMvc.perform(get("/v1/geotags")
                 .param("user", "dummyuser"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(0)));
@@ -248,7 +248,7 @@ public class ApplicationTests {
         NBUserDetails nbUserDetails2 = new NBUserDetails("sessionID1234", UUID.fromString(USER_ID_2), "myusername", "mypassword", true, true, true, true, true, permissions);
         when(nbUserService.getNBUser()).thenReturn(nbUserDetails2);
 
-        mockMvc.perform(get("/geotags")
+        mockMvc.perform(get("/v1/geotags")
                 .param("urn", tag1.getUrn()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(1)))
@@ -259,7 +259,7 @@ public class ApplicationTests {
 
         GeoTag tag3 = new GeoTag("", "URN:NBN:no-nb_digifoto_20131218_00056_NB_WF_LUR_041262", new GeoPosition(USER_ID, 12.835818529129028, 66.40039201638066, new Date()));
 
-        mockMvc.perform(put("/geotags/{tagid}", tag1.getGeoId())
+        mockMvc.perform(put("/v1/geotags/{tagid}", tag1.getGeoId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.convertValue(tag3, JsonNode.class).toString()))
                 .andExpect(status().isOk());
@@ -267,7 +267,7 @@ public class ApplicationTests {
 //        mockMvc.perform(delete("/geotags/{tagid}", tag1.getGeoId()))
 //                .andExpect(status().isForbidden());
 
-        mockMvc.perform(delete("/geotags/{tagid}/{posId}", "dummyid", "dummyPos"))
+        mockMvc.perform(delete("/v1/geotags/{tagid}/{posId}", "dummyid", "dummyPos"))
                 .andExpect(status().isNotFound());
     }
 

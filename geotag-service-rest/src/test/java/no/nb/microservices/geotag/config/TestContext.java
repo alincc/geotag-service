@@ -1,7 +1,7 @@
 package no.nb.microservices.geotag.config;
 
 import no.nb.microservices.geotag.repository.GeoTagRepository;
-import no.nb.microservices.geotag.rest.global.GlobalControllerExceptionHandler;
+import no.nb.microservices.geotag.rest.global.GlobalExceptionHandler;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,8 +34,8 @@ public class TestContext {
     public static ExceptionHandlerExceptionResolver createExceptionResolver() {
         ExceptionHandlerExceptionResolver exceptionResolver = new ExceptionHandlerExceptionResolver() {
             protected ServletInvocableHandlerMethod getExceptionHandlerMethod(HandlerMethod handlerMethod, Exception exception) {
-                Method method = new ExceptionHandlerMethodResolver(GlobalControllerExceptionHandler.class).resolveMethod(exception);
-                return new ServletInvocableHandlerMethod(new GlobalControllerExceptionHandler(), method);
+                Method method = new ExceptionHandlerMethodResolver(GlobalExceptionHandler.class).resolveMethod(exception);
+                return new ServletInvocableHandlerMethod(new GlobalExceptionHandler(), method);
             }
         };
         exceptionResolver.afterPropertiesSet();
