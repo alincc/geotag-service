@@ -3,6 +3,21 @@ spring:
     name: geotag-service
   cloud:
     config:
-      uri: ${SPRING_CONFIG_URI:http://localhost:8888}
       failFast: false
+      discovery:
+        enabled: true
 
+---
+
+spring:
+  profiles: docker
+  cloud:
+    config:
+      failFast: true
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
