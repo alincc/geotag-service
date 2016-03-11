@@ -4,7 +4,7 @@ info:
     description: Manages the geolocation of items
 
 server:
-  port: 0
+  port: 8024
 
 spring:
   data:
